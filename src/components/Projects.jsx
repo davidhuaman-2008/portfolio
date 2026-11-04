@@ -54,14 +54,15 @@ const CssIcon = () => (
 const CoverflowCarousel = ({ images, title }) => {
   const [index, setIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  const [isHovered, setIsHovered] = useState(false); // <-- NUEVO ESTADO
 
   useEffect(() => {
-    if (isPaused || images.length <= 1) return;
+    if (isPaused || isHovered || images.length <= 1) return; // Pausa si hay hover
     const timer = setInterval(() => {
       setIndex((prev) => (prev + 1) % images.length);
     }, 3500);
     return () => clearInterval(timer);
-  }, [images.length, isPaused]);
+  }, [images.length, isPaused, isHovered]);
 
   const getOffset = (i) => {
     let diff = i - index;
@@ -99,18 +100,24 @@ const CoverflowCarousel = ({ images, title }) => {
                 scale: isActive ? 1 : 0.7,
                 rotateY: offset * -30,
                 opacity: isActive ? 1 : Math.abs(offset) === 1 ? 0.4 : 0.15,
-                zIndex: isActive ? 10 : 5 - Math.abs(offset),
+                zIndex: isActive ? (isHovered ? 50 : 10) : 5 - Math.abs(offset), // Sube el z-index al hacer hover
                 filter: isActive ? 'brightness(1)' : 'brightness(0.4)',
               }}
               transition={{ type: 'spring', stiffness: 200, damping: 25, mass: 0.8 }}
               style={{ transformStyle: 'preserve-3d' }}
             >
-              <img
+              <motion.img
                 src={img}
                 alt={`${title} - ${i + 1}`}
-                className={`w-[85%] h-[85%] object-cover rounded-xl shadow-2xl ${
+                // Cambiamos object-cover a object-contain para que no se corten los bordes
+                className={`w-[85%] h-[85%] object-contain rounded-xl shadow-2xl bg-slate-900 ${
                   isActive ? 'ring-2 ring-cyan-400/50 shadow-[0_0_40px_rgba(6,182,212,0.3)]' : ''
                 }`}
+                // Animación de zoom al pasar el mouse por la imagen activa
+                animate={isActive && isHovered ? { scale: 1.15 } : { scale: 1 }}
+                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
               />
             </motion.div>
           );
