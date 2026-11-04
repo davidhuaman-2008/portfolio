@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 import { FiGithub, FiLinkedin, FiMail, FiDownload, FiChevronDown } from 'react-icons/fi';
 import profileImg from '../assets/images/profile.jpg';
+import WhatsAppButton from './WhatsAppButton'; // <-- Importamos el nuevo componente
 
 const Hero = () => {
   return (
@@ -47,15 +48,19 @@ const Hero = () => {
             <a href="#projects" className="px-8 py-3 bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-bold rounded-lg transition-all flex items-center gap-2 shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)]">
               Ver Proyectos
             </a>
-            <a href="/CV_DAVID_HUAMAN_ROMERO.pdf" download className="px-8 py-3 border border-cyan-500 text-cyan-400 hover:bg-cyan-500/10 font-bold rounded-lg transition-all flex items-center gap-2">
+            {/* Corregido a minúsculas para Netlify */}
+            <a href="/cv_david_huaman_romero.pdf" download className="px-8 py-3 border border-cyan-500 text-cyan-400 hover:bg-cyan-500/10 font-bold rounded-lg transition-all flex items-center gap-2">
               <FiDownload size={20} /> Descargar CV
             </a>
           </div>
 
-          <div className="flex gap-6 pt-8 text-slate-400">
+          <div className="flex gap-6 pt-8 text-slate-400 items-center">
             <a href="https://github.com/davidhuaman-2008" target="_blank" rel="noreferrer" className="hover:text-cyan-400 transition-colors hover:-translate-y-1 transform duration-300"><FiGithub size={28} /></a>
             <a href="https://www.linkedin.com/in/dhuaman2008" target="_blank" rel="noreferrer" className="hover:text-cyan-400 transition-colors hover:-translate-y-1 transform duration-300"><FiLinkedin size={28} /></a>
             <a href="mailto:dhuaman.2008@gmail.com" className="hover:text-cyan-400 transition-colors hover:-translate-y-1 transform duration-300"><FiMail size={28} /></a>
+            
+            {/* Aquí insertamos el componente Lego */}
+            <WhatsAppButton size={28} />
           </div>
         </motion.div>
 

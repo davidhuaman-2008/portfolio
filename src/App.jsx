@@ -9,9 +9,9 @@ import Certificates from './components/Certificates';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Aurora from './components/Aurora';
+import WhatsAppButton from './components/WhatsAppButton'; // <-- Importamos el componente
 
 // Carga diferida (Lazy Loading) para el ChatBot
-// Esto hace que el bundle principal sea más ligero y cargue más rápido
 const ChatBot = lazy(() => import('./components/ChatBot'));
 
 function App() {
@@ -59,6 +59,9 @@ function App() {
       <Suspense fallback={null}>
         <ChatBot />
       </Suspense>
+
+      {/* Botón Flotante de WhatsApp (Reutilizando el componente) */}
+      <WhatsAppButton isFloating={true} />
     </div>
   );
 }
