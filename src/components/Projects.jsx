@@ -32,11 +32,11 @@ import sistema3 from '../assets/images/sistema/sistema3.png';
 import sistema4 from '../assets/images/sistema/sistema4.png';
 import sistema5 from '../assets/images/sistema/sistema5.png';
 
-import hospedaje1 from '../assets/images/hospedaje/hospedaje1.png';
-import hospedaje2 from '../assets/images/hospedaje/hospedaje2.png';
-import hospedaje3 from '../assets/images/hospedaje/hospedaje3.png';
-import hospedaje4 from '../assets/images/hospedaje/hospedaje4.png';
-import hospedaje5 from '../assets/images/hospedaje/hospedaje5.png';
+import hospedaje1 from '../assets/images/Hospedaje/hospedaje1.png';
+import hospedaje2 from '../assets/images/Hospedaje/hospedaje2.png';
+import hospedaje3 from '../assets/images/Hospedaje/hospedaje3.png';
+import hospedaje4 from '../assets/images/Hospedaje/hospedaje4.png';
+import hospedaje5 from '../assets/images/Hospedaje/hospedaje5.png';
 import valergy from '../assets/images/valergy.png';
 
 const SqlServerIcon = () => (
