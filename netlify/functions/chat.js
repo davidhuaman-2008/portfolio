@@ -1,9 +1,14 @@
-export default async function handler(req, res) {
+export default async (req, context) => {
+  // 1. Verificar método
   if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Método no permitido' });
+    return new Response(JSON.stringify({ error: 'Método no permitido' }), {
+      status: 405,
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
 
-  const { messages } = req.body;
+  // 2. Leer el body (Netlify usa req.json())
+  const { messages } = await req.json();
 
   const systemPrompt = `
     Eres David Huaman Romero, un desarrollador de software peruano. Estás chateando con un reclutador o visitante de tu portafolio web.
@@ -92,7 +97,7 @@ export default async function handler(req, res) {
           { role: 'system', content: systemPrompt },
           ...messages 
         ],
-        temperature: 0.6, // Un poco más bajo para que sea muy preciso con tus datos
+        temperature: 0.6,
         max_tokens: 300 
       })
     });
@@ -100,13 +105,22 @@ export default async function handler(req, res) {
     const data = await response.json();
 
     if (!response.ok) {
-      console.error("Error de Groq:", data);
-      return res.status(500).json({ error: 'Error en la API de IA' });
+      return new Response(JSON.stringify({ error: 'Error en la API de IA' }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
     
-    res.status(200).json({ reply: data.choices[0].message.content });
+    // 3. Devolver la respuesta en el formato que espera Netlify
+    return new Response(JSON.stringify({ reply: data.choices[0].message.content }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    });
+
   } catch (error) {
-    console.error('Error en el servidor:', error);
-    res.status(500).json({ error: 'Error de conexión' });
+    return new Response(JSON.stringify({ error: 'Error de conexión' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    });
   }
-}
+};
